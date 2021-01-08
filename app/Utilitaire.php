@@ -4,24 +4,30 @@ namespace App;
 
 class Utilitaire extends Vehicule
 {
-    private int $kilometre;
-    private int $volume;
-    private float $tarif = 0;
-    private string $denomination = '';
-    private bool $popularite = false;
+    protected int $kilometre;
+    protected int $volume;
 
-    public function donnerTarif(Vehicule $prix, $volume): void
+    public function __construct(string $name, float $prix, bool $popularite, int $kilometre, int $volume)
+	{
+        parent::__construct($name, $prix, $popularite);
+        $this->kilometre = $kilometre;
+        $this->volume = $volume;
+    }
+    
+
+    public function donnerTarif($Utilitaire): int
     {
-        $this->tarif = ($prix + $volume) * 10;
+        return ($Utilitaire->prix + $Utilitaire->volume) * 10;
     }
 
-    public function donnerDenomination(Vehicule $nom, Marque $nomMarque): void
+    public function donnerDenomination($utilitaire, $marque): string
     {
-        $this->denomination = $nomMarque.''.$nom;
+        return $marque->nom ."_". $utilitaire->nom;
     }
 
-    public function modifierPopularite($volume): void
-    {   
+    public function modifierPopularite($Utilitaire): void
+    {      
+        $volume = $Utilitaire->volume;
         if($volume > 11){
             $this->popularite = true;
         }else{
